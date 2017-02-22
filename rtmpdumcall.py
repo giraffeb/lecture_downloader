@@ -1,8 +1,11 @@
+from multiprocessing import Pool
 import io
-import os
-from multiprocessing import Process, Queue
 import subprocess
-import logging
+
+
+def f(x):
+    return x*x
+
 
 
 def getUrlList(urlList):
@@ -16,90 +19,49 @@ def getUrlList(urlList):
 
     while fd.tell() < fdend :
         strl = fd.readline()
+        print(strl)
         strl = strl.replace("\n", "")
-        urlList.append(strl)
-        # print(strl)
-        # print(fd.tell())
-
+        parts = strl.split(",")
+        urlList.append({"url":parts[0], "fileName":parts[1]})
         index + 1
     fd.close()
-    # str2 = "rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1120/o-hss-071024-2_h.mp4"
-    # host = subprocess.Popen("./rtmpdump-2.3/rtmpdump.exe -v -r "+str2+" -o 0", stdout=subprocess.PIPE).communicate()
-    # print(host[0] + host[1])
-
-
-
 
 def downloadVideo(command, url, filename):
     print(url)
+    print(filename)
     url=" -r" + url
-    filename = " -o "+filename
+    filename = " -o " + filename
     parameter = command + url + filename
     host = subprocess.Popen(parameter)
     print(host.communicate())
 
+if __name__ == '__main__':
 
+    dir = input("download dir : ")
+    np = input("number of process(default : 1, MAX :4) :")
 
+    numberOfProcess = 0
+    if np == "":
+        numberOfProcess = 1
+    if int(np) > 4:
+        numberOfProcess = 4
+    numberOfProcess = int(np)
 
-if __name__=='__main__':
     urlList = []
 
-    getUrlList(urlList)
-    urlListIndex=0
-
-
-    # index=0
-    # for el in urlList:
-    #     print(str(index) +" "+ el)
-    #     index += 1
-
     command = "./rtmpdump-2.3/rtmpdump.exe -v"
-    url=""
-    filename=""
-    processes = []
-    endFlag = False
+    getUrlList(urlList)
+    urlListIndex = 0
 
-    for i in range(0, 4):
-        if urlListIndex < len(urlList):
-            temp = Process(target=downloadVideo, args=(command, urlList[urlListIndex], str(urlListIndex)))
-            processes.append(temp)
-            urlListIndex += 1
-            temp.start()
-
-
-    while endFlag == False :
-
-
-        for p in processes:
-            p.join()
-            if p.is_alive() == False and urlListIndex < len(urlList):
-                temp = Process(target=downloadVideo, args=(command, urlList[urlListIndex], filename))
-                processes.append(temp)
+    while urlListIndex <= len(urlList):
+        pool = Pool(processes=numberOfProcess)
+        for i in range(numberOfProcess):
+            if urlListIndex <= len(urlList):
+                print(urlList[urlListIndex].get("url"))
+                print(urlList[urlListIndex].get("fileNAme"))
+                filename = dir+"\\"+urlList[urlListIndex].get("fileName")
+                url = urlList[urlListIndex].get("url")
+                res = pool.apply_async(downloadVideo, (command, url, filename))
                 urlListIndex += 1
-                temp.start()
-                continue
-
-        if urlListIndex == len(urlList):
-            endFlag = True
-
-
-    #
-    # while(True):
-    #
-    #     for p in processes:
-    #         if p.is_alive() == False:
-    #             p.start()
-    #
-    #     for p in processes:
-    #         p.join()
-    #
-    #     if urlListIndex < len(urlList):
-    #         for p in processes:
-    #             if p.is_alive() == False:
-    #                 p = Process(target=downloadVideo, args=(command, urlList[urlListIndex], filename))
-    #                 urlListIndex += 1
-    #     elif urlListIndex == len(urlList) :
-    #         break
-
-
-    print("end")
+        pool.close()
+        pool.join()
