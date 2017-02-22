@@ -5,7 +5,8 @@
 ### 필요한 Python 라이브러리
     1) BeautifulSoup4
     2) selenium
-    3) chromeDriver
+    3) lxml
+    4) chromeDriver
     ** python3가 먼저 설치 되어 있어야합니다.
 
 ### 프로그램 구성
@@ -26,6 +27,7 @@
     ```
         $> pip install beautiful4
         $> pip install selenium
+        $> pip install lxml
     ```
 
     2) chrome driver download
