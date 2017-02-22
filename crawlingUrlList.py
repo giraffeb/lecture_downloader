@@ -4,13 +4,15 @@
 
 
 import urllib.parse
-import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
+print("######START TABLE SEARCHING ######")
+target = input("snui url : ")
+
 driver = webdriver.Chrome()
 driver.implicitly_wait(10)
-driver.get('http://snui.snu.ac.kr/ocw/index.php?mode=view&id=626')
+driver.get(target)
 
 
 html = driver.page_source
@@ -20,7 +22,8 @@ soup = BeautifulSoup(html, 'lxml', from_encoding='utf-8')
 index = 0
 downloadList=[];
 table = soup.find('table')
-print("######START TABLE SEARCHING ######")
+
+
 for atag in table.find_all('a'):
 
 
@@ -31,9 +34,11 @@ for atag in table.find_all('a'):
     soup = BeautifulSoup(html, 'lxml', from_encoding='utf-8')
     player = soup.find('object', {'type': 'application/x-shockwave-flash'})
     src = soup.find('param', {'name': 'flashvars'})
+    content = atag.text.strip().replace(u'\xa0', u' ').replace(" ", "_").replace("/","_")
+    print(content)
     print(player["data"])
     print(src['value'])
-    downloadList.append({"siteUrl": atag['href'], "player": player["data"] , "flashvars": src['value']})
+    downloadList.append({"siteUrl": atag['href'], "contentName": content, "player": player["data"] , "flashvars": src['value']})
 
 dicList=[{}]
 str = ""
@@ -54,7 +59,7 @@ for e in downloadList:
                file = de.get("file")
             elif de.get('streamer'):
                 stream = de.get('streamer')
-    str = stream+file
+    str = stream+file+","+e.get("contentName")
     print(str)
     fd.write(str+'\n')
 
