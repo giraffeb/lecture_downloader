@@ -1,12 +1,7 @@
-from multiprocessing import Pool
+from multiprocessing import Process
 import io
 import subprocess
-
-
-def f(x):
-    return x*x
-
-
+import multiprocessing
 
 def getUrlList(urlList):
     fd = open("list.txt","r")
@@ -22,18 +17,26 @@ def getUrlList(urlList):
         print(strl)
         strl = strl.replace("\n", "")
         parts = strl.split(",")
-        urlList.append({"url":parts[0], "fileName":parts[1]})
+        urlList.put({"url":parts[0], "fileName":parts[1]})
         index + 1
     fd.close()
 
-def downloadVideo(command, url, filename):
-    print(url)
-    print(filename)
-    url=" -r" + url
-    filename = " -o " + filename
-    parameter = command + url + filename
-    host = subprocess.Popen(parameter)
-    print(host.communicate())
+
+def downloadVideo(command, dir, urlList):
+    while True:
+        item = urlList.get()
+        if item is None:
+            break
+        print(item.get("url"))
+        print(item.get("fileName"))
+
+        filename = dir + "\\" + item.get("fileName")
+        url = item.get("url")
+        url=" -r" + url
+        filename = " -o " + filename
+        parameter = command + url + filename
+        host = subprocess.run(parameter, stdin=subprocess.PIPE, check=True)
+    return host.returncode
 
 if __name__ == '__main__':
 
@@ -47,21 +50,19 @@ if __name__ == '__main__':
         numberOfProcess = 4
     numberOfProcess = int(np)
 
-    urlList = []
+    urlList = multiprocessing.Queue()
 
-    command = "./rtmpdump-2.3/rtmpdump.exe -v"
+    command = "./rtmpdump-2.3/rtmpdump.exe -v "
     getUrlList(urlList)
     urlListIndex = 0
 
-    while urlListIndex <= len(urlList):
-        pool = Pool(processes=numberOfProcess)
-        for i in range(numberOfProcess):
-            if urlListIndex <= len(urlList):
-                print(urlList[urlListIndex].get("url"))
-                print(urlList[urlListIndex].get("fileNAme"))
-                filename = dir+"\\"+urlList[urlListIndex].get("fileName")
-                url = urlList[urlListIndex].get("url")
-                res = pool.apply_async(downloadVideo, (command, url, filename))
-                urlListIndex += 1
-        pool.close()
-        pool.join()
+    processList =[]
+    # while urlListIndex <= urlList.maxsize:
+    for i in range(numberOfProcess):
+        p = Process(target=downloadVideo, args=(command, dir, urlList))
+        processList.append(p)
+        p.start()
+
+    for p in processList:
+        p.join()
+
