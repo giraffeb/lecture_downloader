@@ -1,9 +1,9 @@
 # lecture_downloader
 
-###Pycharm project upload.
-windows 8환경에서 테스트 되었습니다.
-내부에서 rtmpdump를 사용합니다.
-python3.X 버전을 사용했습니다
+###Pycharm project upload.<br>
+windows 8환경에서 테스트 되었습니다.<br>
+내부에서 rtmpdump를 사용합니다.<br>
+python3.X 버전을 사용했습니다<br>
 
 ### 필요한 Python 라이브러리
     1) BeautifulSoup4
