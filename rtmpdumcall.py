@@ -1,7 +1,7 @@
 from multiprocessing import Process
 import io
 import subprocess
-import multiprocessing
+import queue
 
 def getUrlList(urlList):
     fd = open("list.txt","r")
@@ -50,14 +50,13 @@ if __name__ == '__main__':
         numberOfProcess = 4
     numberOfProcess = int(np)
 
-    urlList = multiprocessing.Queue()
+    urlList = queue.Queue()
 
     command = "./rtmpdump-2.3/rtmpdump.exe -v "
     getUrlList(urlList)
     urlListIndex = 0
 
     processList =[]
-    # while urlListIndex <= urlList.maxsize:
     for i in range(numberOfProcess):
         p = Process(target=downloadVideo, args=(command, dir, urlList))
         processList.append(p)
