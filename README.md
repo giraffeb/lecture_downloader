@@ -12,6 +12,14 @@ python3.X 버전을 사용했습니다<br>
     4) chromeDriver
     ** python3가 먼저 설치 되어 있어야합니다.
 
+### 패치노트
+
+    1) windows filename limit
+    윈도우 파일시스템에서 이름으로 제한되는 문자들을 제거하는 부분 추가함
+    [\, /, :, *, ?, ", <, >, |]
+
+
+
 ### 프로그램 구성
     crawlingUrlList.py 실행 후 -> rtmpdumcall.py 실행
 

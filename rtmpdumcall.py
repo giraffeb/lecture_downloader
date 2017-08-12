@@ -1,7 +1,7 @@
 from multiprocessing import Process
 import io
 import subprocess
-import queue
+import multiprocessing
 
 def getUrlList(urlList):
     fd = open("list.txt","r")
@@ -30,7 +30,29 @@ def downloadVideo(command, dir, urlList):
         print(item.get("url"))
         print(item.get("fileName"))
 
-        filename = dir + "\\" + item.get("fileName")
+        '''
+        windows filename limit 
+        [\, /, :, *, ?, ", <, >, |]
+        '''
+        limit = ["\\", "/", ":", "*", "?", "\"", "<", ">", "|"]
+
+        tempFileName = item.get("fileName")
+        newFileName = ""
+        for si in range(len(tempFileName)):
+            flag = False
+            for li in limit:
+                if tempFileName[si] == li:
+                    newFileName += "_"
+                    flag = True
+                    break
+            if flag == False:
+                newFileName += tempFileName[si]
+
+
+
+
+        # filename = dir + "\\" + item.get("fileName")
+        filename = dir + "\\" + newFileName
         url = item.get("url")
         url=" -r" + url
         filename = " -o " + filename
@@ -50,7 +72,7 @@ if __name__ == '__main__':
         numberOfProcess = 4
     numberOfProcess = int(np)
 
-    urlList = queue.Queue()
+    urlList = multiprocessing.Manager().Queue()
 
     command = "./rtmpdump-2.3/rtmpdump.exe -v "
     getUrlList(urlList)
