@@ -21,12 +21,15 @@ python3.X 버전을 사용했습니다<br>
 
 
 ### 프로그램 구성
-    crawlingUrlList.py 실행 후 -> rtmpdumcall.py 실행
+    start.py 실행
 
-    1) crawlingUrlList.py
+    1) start.py
+       프로그램 실행
+    
+    2) crawling_url_list.py
         snui의 열린강좌의 url에 접근해서 해당 강좌의 url리스트를 가져옴
 
-    2) rtmpdumcall.py
+    3) rtmpdumcall.py
         crawlingUrlList.py실행 후 list.txt가 생성되면, 저장된 url을 접근해서 다운로드함.
         저장 디렉토리 지정, 다운로드 프로세스 수 지정 가능
 
@@ -40,7 +43,9 @@ python3.X 버전을 사용했습니다<br>
         $> pip install selenium
         $> pip install lxml
     ```
-
+    
+    > setup.py, requirements.txt로 바꾸자.
+    
     2) chrome driver download
     https://sites.google.com/a/chromium.org/chromedriver/downloads
     운영체제에 맞는 것을 선택해서
