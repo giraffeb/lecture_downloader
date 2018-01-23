@@ -1,89 +1,71 @@
-from multiprocessing import Process
-import io
+# -*- coding:utf-8 -*-
+
 import subprocess
 import multiprocessing
 
-def getUrlList(urlList):
-    fd = open("list.txt","r")
-    ptr=0
-    strl= ""
-    fdend = fd.seek(0,io.SEEK_END)
-    fd.seek(0,io.SEEK_SET)
-    index=0
-    # print(fdend)
+class RtmpDumpCall:
 
-    while fd.tell() < fdend :
-        strl = fd.readline()
-        print(strl)
-        strl = strl.replace("\n", "")
-        parts = strl.split(",")
-        urlList.put({"url":parts[0], "fileName":parts[1]})
-        index + 1
-    fd.close()
-
-
-def downloadVideo(command, dir, urlList):
-    while True:
-        item = urlList.get()
-        if item is None:
-            break
-        print(item.get("url"))
-        print(item.get("fileName"))
-
+    def makeUrlListFromFile(self, file_path):
         '''
-        windows filename limit 
-        [\, /, :, *, ?, ", <, >, |]
+        :param file_path:
+        :return:
+
+        미리 수집된 url_text가 저장된 파일에서 하나씩 꺼내서 list로 반환함.
         '''
-        limit = ["\\", "/", ":", "*", "?", "\"", "<", ">", "|"]
+        url_list = []
+        with open(file_path, "r", encoding="utf-8") as fp:
+            for line in fp:
+                splitted_line = line.rstrip().split(",")
+                file_name = self.replace_windows_file_reserved_chracters(splitted_line[0])
+                url_list.append({"url": splitted_line[1], "fileName": file_name})
 
-        tempFileName = item.get("fileName")
-        newFileName = ""
-        for si in range(len(tempFileName)):
-            flag = False
-            for li in limit:
-                if tempFileName[si] == li:
-                    newFileName += "_"
-                    flag = True
-                    break
-            if flag == False:
-                newFileName += tempFileName[si]
+        return url_list
 
 
 
+    '''
+    Multiprocessing.Manager().Queue() 객체에 파일에 미리 수집된 url주소를 입력함.
+    '''
+    def setUrlQueueFromFile(self, rtmp_path, dir, urlList):
+        '''
+        :param urlList:
+        :param urlQueue:
+        :return:
 
-        # filename = dir + "\\" + item.get("fileName")
-        filename = dir + "\\" + newFileName
-        url = item.get("url")
-        url=" -r" + url
-        filename = " -o " + filename
-        parameter = command + url + filename
-        host = subprocess.run(parameter, stdin=subprocess.PIPE, check=True)
-    return host.returncode
+        list: urlList에서 하나씩 꺼내서 Queue: urlQueue에 하나씩 담는 일만함.
+        이후 변경에 대응해서 분리
+        '''
+        urlQueue = multiprocessing.Manager().Queue()
+        for url in urlList:
+            cmd = self.generate_rtmp_command(rtmp_path, url.get("url"), dir, url.get("fileName") )
+            urlQueue.put(cmd)
 
-if __name__ == '__main__':
+        return urlQueue
 
-    dir = input("download dir : ")
-    np = input("number of process(default : 1, MAX :4) :")
+    def replace_windows_file_reserved_chracters(self, original_file_name):
+        import re
+        # limit = ["\\", "/", ":", "*", "?", "\"", "<", ">", "|"]
 
-    numberOfProcess = 0
-    if np == "":
-        numberOfProcess = 1
-    if int(np) > 4:
-        numberOfProcess = 4
-    numberOfProcess = int(np)
 
-    urlList = multiprocessing.Manager().Queue()
+        p = re.compile(r'[^ /?<>|\*\\:]')
+        m = p.findall(original_file_name)
 
-    command = "./rtmpdump-2.3/rtmpdump.exe -v "
-    getUrlList(urlList)
-    urlListIndex = 0
+        new_file_name = ''.join(map(str,m))
+        return new_file_name
 
-    processList =[]
-    for i in range(numberOfProcess):
-        p = Process(target=downloadVideo, args=(command, dir, urlList))
-        processList.append(p)
-        p.start()
+    def generate_rtmp_command(self, rtmp_path, url, dir, filename):
+        new_url = " -o " + url
+        new_filename = " -r" + dir + "/" + filename
 
-    for p in processList:
-        p.join()
+        command = rtmp_path + new_url + new_filename
+
+        return command
+
+    def downloadVideoWithMultiProcess(self, urlQueue):
+        while urlQueue.empty() == False:
+            cmd = urlQueue.get()
+
+
+            host = subprocess.run(cmd, stdin=subprocess.PIPE, check=True)
+        return host.returncode
 
