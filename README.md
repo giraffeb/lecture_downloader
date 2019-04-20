@@ -34,17 +34,10 @@ python3.X 버전을 사용했습니다<br>
         저장 디렉토리 지정, 다운로드 프로세스 수 지정 가능
 
 
-### 라이브러리 설치
+### 라이브러리 설치(r)
     python에 내장된 pip를 이용해서 다운로드함
 
-    1) pip로 python lib설치
-    ```
-        $> pip install beautiful4
-        $> pip install selenium
-        $> pip install lxml
-    ```
-    
-    > setup.py, requirements.txt로 바꾸자.
+    1) pip install -r requirements.txt
     
     2) chrome driver download
     https://sites.google.com/a/chromium.org/chromedriver/downloads
