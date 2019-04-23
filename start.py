@@ -3,9 +3,9 @@ import logging
 import logging.config
 import multiprocessing as mp
 
-from crawling_url_list import CrawlingUrl
-from myLogger import MyLoggerConfig
-from rtmpdumcall import RtmpDumpPrepare
+from lib.crawling_url_list import CrawlingUrl
+from lib.myLogger import MyLoggerConfig
+from lib.rtmpdumpcall import RtmpDumpPrepare
 
 '''
 서로 호출하는 것만 만들어 놓아야겠다.

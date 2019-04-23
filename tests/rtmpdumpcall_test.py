@@ -1,5 +1,5 @@
 import unittest
-from rtmpdumcall import RtmpDumpPrepare
+from lib.rtmpdumpcall import RtmpDumpPrepare
 import logging
 
 class rtmpdumpTest(unittest.TestCase):
@@ -43,7 +43,6 @@ class rtmpdumpTest(unittest.TestCase):
 
 
     def test_setUrlQueueFromFile(self):
-        import multiprocessing
         print('멀티큐 생성 ')
         rtmp = RtmpDumpPrepare()
         list = rtmp.load_lecture_url_from_file('./list.txt')
