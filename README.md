@@ -14,7 +14,9 @@
     1) BeautifulSoup4
     2) selenium
     3) lxml
-    4) chrome WebDriver
+    4) gecko WebDriver
+    5) firefox
+    6) adobe flash
     ** python3가 먼저 설치 되어 있어야합니다.
 
 ### 패치노트
