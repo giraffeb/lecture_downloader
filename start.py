@@ -80,7 +80,8 @@ def main():
     logging.config.dictConfig(my_logger.get_myLogger_config())
 
     #1 크롤링하기
-    crawling_procedure(debug_flag=True)
+    # crawling_procedure(debug_flag=True)
+    crawling_procedure(debug_flag=False)
     #2 다운로드하기
     video_download_procedure()
 
