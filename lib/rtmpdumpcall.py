@@ -33,7 +33,7 @@ class RtmpDumpPrepare:
     '''
     Multiprocessing.Manager().Queue() 객체에 파일에 미리 수집된 url주소를 입력함.
     '''
-    def generate_process_queue(self, rtmpdump_path, objective_dir_path, lecture_urls_file_path):
+    def generate_process_queue(self, rtmpdump_path, objective_dir_path, lecture_urls):
         '''
         list: urlList에서 하나씩 꺼내서 Queue: urlQueue에 하나씩 담는 일만함.
         rtmp_dump프로그램 주소와 와 파라미터로 다운로드 링크를 넘김 저장해서 큐에 담아둠
@@ -45,7 +45,7 @@ class RtmpDumpPrepare:
         '''
         rtmpdump_cmd_queue = multiprocessing.Manager().Queue()
 
-        for lecture_url in lecture_urls_file_path:
+        for lecture_url in lecture_urls:
             cmd = self.generate_rtmpdump_command(rtmpdump_path, lecture_url.get("url"), objective_dir_path, lecture_url.get("fileName"))
             rtmpdump_cmd_queue.put(cmd)
 
