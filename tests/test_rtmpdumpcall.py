@@ -64,11 +64,13 @@ class rtmpdumpTest(unittest.TestCase):
         rtmp = RtmpDumpPrepare()
         list = rtmp.load_lecture_url_from_file(sample_file_path)
         #def setUrlQueueFromFile(self, rtmp_path, dir, urlList):
-        resultList = rtmp.generate_process_queue(rtmpdump_path='rtmpdump_path', objective_dir_path='/virtual', lecture_urls_file_path=list)
+        resultList = rtmp.generate_process_queue(rtmpdump_path='rtmpdump_path', objective_dir_path='/virtual', lecture_urls=list)
 
         while resultList.qsize() > 0:
             print(resultList.get())
 
+if __name__ == "__main__":
+    unittest.main()
 
 
 
