@@ -1,15 +1,20 @@
 # lecture_downloader
 
-###Pycharm project upload.<br>
-windows 8환경에서 테스트 되었습니다.<br>
-내부에서 rtmpdump를 사용합니다.<br>
-python3.X 버전을 사용했습니다<br>
+### Pycharm project upload.<br>
+
+#### 19-04-23 변경점
+사용시스템을 맥으로 변경하면서 수정해봄<br>
+윈도우에서 사용시에는 코드 변경이 필요함<br>
+* mac os 10.14.3
+* rtmpdump v2.4 --> brew install rtmpdump
+* firefox v66.0.3
+* geckodriver v0.24.0
 
 ### 필요한 Python 라이브러리
     1) BeautifulSoup4
     2) selenium
     3) lxml
-    4) chromeDriver
+    4) chrome WebDriver
     ** python3가 먼저 설치 되어 있어야합니다.
 
 ### 패치노트
@@ -25,13 +30,6 @@ python3.X 버전을 사용했습니다<br>
 
     1) start.py
        프로그램 실행
-    
-    2) crawling_url_list.py
-        snui의 열린강좌의 url에 접근해서 해당 강좌의 url리스트를 가져옴
-
-    3) rtmpdumcall.py
-        crawlingUrlList.py실행 후 list.txt가 생성되면, 저장된 url을 접근해서 다운로드함.
-        저장 디렉토리 지정, 다운로드 프로세스 수 지정 가능
 
 
 ### 라이브러리 설치(r)

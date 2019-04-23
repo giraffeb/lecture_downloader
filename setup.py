@@ -8,6 +8,7 @@ setup(
     author_email = 'rwpark07@gmail.com',
     url = 'https://github.com/giraffeb/lecture_downloader',
     install_requires = [],
+    script = 'start.py',
     packages = find_packages(exclude = []),
     python_requires = '>=3',
     classifier = [
