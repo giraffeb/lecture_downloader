@@ -1,6 +1,0 @@
-0_Introduction_to_OS_1,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1064/o-hss-071001-1_h.mp4
-1_Introduction_to_OS_1,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1065/o-hss-071001-2_h.mp4
-2_Introduction_to_OS_1,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1066/o-hss-071001-3_h.mp4
-3_Introduction_to_OS_2,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1067/o-hss-071002-1_h.mp4
-4_Introduction_to_OS_2,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1068/o-hss-071002-2_h.mp4
-5_Review_of_Computer_Hardware_:_Computer_Systems_Architecture,rtmp://vod2.snu.ac.kr/vod/_definst_/mp4:/vod2/1069/o-hss-071003-1_h.mp4
