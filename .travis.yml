@@ -3,7 +3,11 @@ language: python
 install:
   - pip install -r requirements.txt
 
-override:
+script:
       - pytest --cov=./ ./tests/
-  post:
-      - codecov
+
+env:
+    - CODECOV_TOKEN=fd957741-6942-43c5-9075-9ddd9e8ae54c
+
+after_success:
+    - codecov
