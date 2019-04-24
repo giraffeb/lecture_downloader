@@ -3,6 +3,8 @@ import logging
 import logging.config
 import multiprocessing as mp
 
+import os
+
 from lib.crawling_url_list import CrawlingUrl
 from lib.myLogger import MyLoggerConfig
 from lib.rtmpdumpcall import RtmpDumpPrepare
@@ -75,6 +77,8 @@ def video_download_procedure():
 
 
 def main():
+    print(os.getcwd())
+
     my_logger = MyLoggerConfig()
     my_logger.yaml_config_loader()
     logging.config.dictConfig(my_logger.get_myLogger_config())

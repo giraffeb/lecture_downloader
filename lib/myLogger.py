@@ -1,5 +1,6 @@
 import yaml
 
+
 class MyLoggerConfig:
     def __init__(self):
         self.my_logger_config = {}

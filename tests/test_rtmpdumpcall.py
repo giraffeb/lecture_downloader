@@ -34,7 +34,7 @@ class RtmpDumpTest(unittest.TestCase):
         logging.debug('test_replace_windows_file_reserved_chracters')
         rtmp = RtmpDumpPrepare()
         list = rtmp.load_lecture_url_from_file(sample_file_path)
-        
+
         for line in list:
             file_name = rtmp.replace_windows_file_reserved_chracters(line['fileName'])
             print(file_name)

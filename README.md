@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/giraffeb/lecture_downloader.svg?branch=master)](https://travis-ci.org/giraffeb/lecture_downloader)
 # lecture_downloader
 
 ### Pycharm project upload.<br>
