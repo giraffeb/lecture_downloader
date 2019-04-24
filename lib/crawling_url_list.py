@@ -40,10 +40,13 @@ class CrawlingUrl:
 
         firefoxProfile = FirefoxProfile()
 
+        options = webdriver.FirefoxOptions()
+        options.add_argument('-headless')
+
         ## Disable Flash
         # firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
         firefoxProfile.set_preference("plugin.state.flash", 2)
-        driver = webdriver.Firefox(executable_path=self.web_driver_path,firefox_profile=firefoxProfile)
+        driver = webdriver.Firefox(executable_path=self.web_driver_path, firefox_profile=firefoxProfile, options=options)
 
         return driver
 
