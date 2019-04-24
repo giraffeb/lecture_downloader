@@ -37,7 +37,14 @@ script:
   - python -m pytest --cov=./ ./tests/
 
 env:
-  - CODECOV_TOKEN=fd957741-6942-43c5-9075-9ddd9e8ae54c
+  - MOZ_HEADLESS=1
+
+addons:
+  firefox: latest
+
 
 after_success:
   - python -m codecov
+
+
+
