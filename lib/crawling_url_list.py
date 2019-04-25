@@ -51,7 +51,9 @@ class CrawlingUrl:
         ## Disable Flash
         # firefoxProfile.set_preference('dom.ipc.plugins.enabled.libflashplayer.so','false')
         firefoxProfile.set_preference("plugin.state.flash", 2)
+
         driver = webdriver.Firefox(executable_path=self.web_driver_path, firefox_profile=firefoxProfile, options=options)
+        driver.implicitly_wait(10)
 
         return driver
 
@@ -87,10 +89,6 @@ class CrawlingUrl:
 
             driver.get(lecture_link)
 
-            element = WebDriverWait(driver, 60).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
-            )
-            print('##element ->', element)
 
             lecture_page_html = driver.page_source
             parsed_lecture_page = BeautifulSoup(lecture_page_html, 'lxml') #plain text -> lxml
