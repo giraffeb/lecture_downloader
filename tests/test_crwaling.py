@@ -31,8 +31,8 @@ class CrawlingTest(unittest.TestCase):
         from lib.webdriver_downloader import WebDriverDownloader
 
 
-        # downloder = WebDriverDownloader()
-        # downloder.download_web_driver()
+        downloder = WebDriverDownloader()
+        downloder.download_web_driver()
 
         default_drvier_path = './geckodriver'
 
