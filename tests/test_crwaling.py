@@ -4,6 +4,7 @@ import logging
 import logging.config
 
 import os
+import pytest
 
 
 
@@ -16,6 +17,7 @@ default_driver_path = working_dir+'/geckodriver'
 default_driver_file_path = default_driver_path+'/geckodriver'
 default_config_path = working_dir+'/sample.yaml'
 
+@pytest.mark.first
 def test_down_web_driver():
     from lib.webdriver_downloader import WebDriverDownloader
 
@@ -72,10 +74,6 @@ def test_until():
 
     finally:
         driver.quit()
-
-
-
-
 
 
 def default_config():
