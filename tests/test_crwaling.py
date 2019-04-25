@@ -9,7 +9,7 @@ import os
 from lib.myLogger import MyLoggerConfig
 from lib.crawling_url_list import CrawlingUrl
 
-default_drvier_path = './geckodriver'
+default_driver_path = './geckodriver'
 default_config_path = './sample.yaml'
 
 
@@ -41,20 +41,20 @@ class CrawlingTest(unittest.TestCase):
         # )
 
         print('COMPLETE MORE')
-    #
-    # def test_load_base_page(self):
-    #
-    #     default_config()
-    #     logger = logging.getLogger(__name__)
-    #     logger.debug("Hello new world")
-    #
-    #     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-    #
-    #     crawl = CrawlingUrl(web_driver_path=default_drvier_path)
-    #     driver = crawl.get_web_driver()
-    #     driver.get(target)
-    #
-    #
+
+    def test_load_base_page(self):
+
+        # default_config()
+        # logger = logging.getLogger(__name__)
+        # logger.debug("Hello new world")
+
+        target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
+
+        crawl = CrawlingUrl(web_driver_path=default_driver_path)
+        driver = crawl.get_web_driver()
+        driver.get(target)
+
+
     # def test_get_lecture_link(self):
     #
     #
