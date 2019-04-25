@@ -3,6 +3,8 @@ import tarfile
 
 import wget
 
+import os
+
 
 class WebDriverDownloader:
 
@@ -12,6 +14,11 @@ class WebDriverDownloader:
         return sys_name
 
     def download_web_driver(self):
+
+        working_dir = os.getcwd()
+        default_driver_path = working_dir + '/geckodriver'
+
+
         gecko_path = '.geckodriver.tar.gz'
         down_path = ''
         sys_name = self.get_platform()
@@ -28,7 +35,7 @@ class WebDriverDownloader:
             out=gecko_path)
 
         tar = tarfile.open(gecko_path)
-        tar.extractall()
+        tar.extractall(path=default_driver_path)
         tar.close()
 
 
