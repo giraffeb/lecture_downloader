@@ -4,6 +4,9 @@ import unittest
 import logging
 import logging.config
 
+import wget
+import tarfile
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,8 +14,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from lib.myLogger import MyLoggerConfig
 from lib.crawling_url_list import CrawlingUrl
 
-default_drvier_path='./geckodriver'
-default_config_path='./sample.yaml'
+default_drvier_path = './geckodriver'
+default_config_path = './sample.yaml'
+
 
 def default_config():
     myLogger = MyLoggerConfig()
@@ -20,9 +24,18 @@ def default_config():
     logging.config.dictConfig(myLogger.get_myLogger_config())
 
 
+
 class CrawlingTest(unittest.TestCase):
 
     def test_webdriver(self):
+        from lib.webdriver_downloader import WebDriverDownloader
+
+
+        # downloder = WebDriverDownloader()
+        # downloder.download_web_driver()
+
+        default_drvier_path = './geckodriver'
+
         crawl = CrawlingUrl(web_driver_path=default_drvier_path)
         driver = crawl.get_web_driver()
         driver.get('http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937')
@@ -32,9 +45,6 @@ class CrawlingTest(unittest.TestCase):
         )
 
         print('COMPLETE MORE')
-        print(element.get)
-
-
 
     # def test_load_base_page(self):
     #
@@ -65,5 +75,3 @@ class CrawlingTest(unittest.TestCase):
     #
     #     crawl = CrawlingUrl(web_driver_path=default_drvier_path, debug=True)
     #     crawl.start_crawling(url='')
-
-

@@ -4,6 +4,8 @@ import logging.config
 import multiprocessing as mp
 
 import os
+import tarfile
+import wget
 
 from lib.crawling_url_list import CrawlingUrl
 from lib.myLogger import MyLoggerConfig
@@ -77,7 +79,10 @@ def video_download_procedure():
 
 
 def main():
-    print(os.getcwd())
+    from lib.webdriver_downloader import  WebDriverDownloader
+
+    down = WebDriverDownloader()
+    down.download_web_driver()
 
     my_logger = MyLoggerConfig()
     my_logger.yaml_config_loader()
