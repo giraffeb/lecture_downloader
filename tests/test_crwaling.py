@@ -4,12 +4,7 @@ import unittest
 import logging
 import logging.config
 
-import wget
-import tarfile
-
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import os
 
 from lib.myLogger import MyLoggerConfig
 from lib.crawling_url_list import CrawlingUrl
@@ -29,6 +24,9 @@ class CrawlingTest(unittest.TestCase):
 
     def test_webdriver(self):
         from lib.webdriver_downloader import WebDriverDownloader
+
+        print("#current dir : ", os.getcwd())
+
 
 
         downloder = WebDriverDownloader()
