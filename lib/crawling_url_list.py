@@ -92,11 +92,22 @@ class CrawlingUrl:
 
             driver.get(lecture_link)
 
-
             lecture_page_html = driver.page_source
             parsed_lecture_page = BeautifulSoup(lecture_page_html, 'lxml') #plain text -> lxml
 
-            urlencode_rtmp_src = parsed_lecture_page.find('param', {'name': 'flashvars'})["value"] #동영상 주소 값
+            # urlencode_rtmp_src = parsed_lecture_page.find('param', {'name': 'flashvars'})["value"] #동영상 주소 값
+            urlencode_rtmp_src=''
+            try:
+                eles = WebDriverWait(driver, 10).until(
+                    EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
+                )
+                for e in eles:
+                    print('#', e.get_attribute('value'))
+                    urlencode_rtmp_src = e.get_attribute('value')
+                    break
+
+            except EnvironmentError:
+                print('#####Until Error')
 
             rtmp_src = self.decode_url_encoding(urlencode_rtmp_src) # urlencode된 값 디코드하기
             lecture_name = lecture_a_tag.text.strip().replace(" ", "_").replace("/", "_") #링크에서 윈도우 파일시스템 -> 파일명으로 불가능한 공백이나 슬래시 값들 대체 TODO: windows 파일 시스템 기준으로 이름, 및 문자인코딩 고려해서 수정하기.

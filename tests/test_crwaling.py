@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 
-import unittest
 import logging
 import logging.config
 
 import os
+
+
 
 from lib.myLogger import MyLoggerConfig
 from lib.crawling_url_list import CrawlingUrl
@@ -15,24 +16,13 @@ default_driver_path = working_dir+'/geckodriver'
 default_driver_file_path = default_driver_path+'/geckodriver'
 default_config_path = working_dir+'/sample.yaml'
 
-def test_webdriver():
+def test_down_web_driver():
     from lib.webdriver_downloader import WebDriverDownloader
 
     print('#default dir ->', default_driver_path)
 
     downloder = WebDriverDownloader()
     downloder.download_web_driver()
-
-
-    crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver()
-    driver.get('http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937')
-
-    # element = WebDriverWait(driver, 60).until(
-    #     EC.presence_of_element_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
-    # )
-
-    print('COMPLETE MORE')
 
 def test_load_base_page():
 
@@ -58,11 +48,33 @@ def test_get_lecture_link():
     crawl.get_video_link(driver, result)
 
 
-def test_starting():
 
+def test_until():
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
 
+    target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
     crawl = CrawlingUrl(web_driver_path=default_driver_file_path, debug=True)
-    crawl.start_crawling(url='')
+    driver = crawl.get_web_driver()
+    driver.get(target)
+
+    try:
+        eles = WebDriverWait(driver, 5).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
+        )
+        for e in eles:
+            print('#', e.get_attribute('value'))
+
+    except EnvironmentError:
+        print('#####err')
+
+
+    finally:
+        driver.quit()
+
+
+
 
 
 
