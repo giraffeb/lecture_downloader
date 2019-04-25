@@ -22,7 +22,6 @@ class CrawlingTest(unittest.TestCase):
         driver = crawl.get_web_driver()
         driver.get('http://www.naver.com')
 
-
     def test_load_base_page(self):
 
         default_config()
