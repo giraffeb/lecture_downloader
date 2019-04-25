@@ -21,11 +21,15 @@ from lib.rtmpdumpcall import RtmpDumpPrepare
 메인에는 단순하게 로직만 넣기.
 
 '''
+working_dir = os.getcwd()
 
-default_file_path = "./list.txt"
+default_file_path = working_dir+"/list.txt"
 default_process_number = 4
 default_dir_path = '.'
 default_web_driver_path = './geckodriver'
+
+default_driver_path = working_dir+'/geckodriver'
+default_driver_file_path = default_driver_path+'/geckodriver'
 
 #rtmpdump_path = "./rtmpdump-2-2.3/rtmpdump "
 rtmpdump_path = "rtmpdump"
@@ -39,7 +43,7 @@ def crawling_procedure(debug_flag):
     target_lecture_link = input("snui url : ")  # 해당 과목의 강의에 속하는 주소
 
 
-    crawl = CrawlingUrl(web_driver_path=default_web_driver_path, file_path=default_file_path, debug=debug_flag)#객체 생성
+    crawl = CrawlingUrl(web_driver_path=default_driver_file_path, file_path=default_file_path, debug=debug_flag)#객체 생성
     crawl.start_crawling(url=target_lecture_link) #list.txt생성
 
 

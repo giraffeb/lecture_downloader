@@ -15,6 +15,8 @@ from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 class CrawlingUrl:
 
     def __init__(self, file_path='./list.txt', char_encoding='utf-8', web_driver_path='', debug=False):
+
+
         self.debug = debug
         self.file_path = file_path;
         self.char_encoding = char_encoding;

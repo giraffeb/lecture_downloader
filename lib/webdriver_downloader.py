@@ -19,7 +19,7 @@ class WebDriverDownloader:
         default_driver_path = working_dir + '/geckodriver'
 
 
-        gecko_path = '.geckodriver.tar.gz'
+        gecko_path = working_dir+'/geckodriver.tar.gz'
         down_path = ''
         sys_name = self.get_platform()
 
