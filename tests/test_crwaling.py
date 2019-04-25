@@ -62,7 +62,7 @@ def test_until():
     driver.get(target)
 
     try:
-        eles = WebDriverWait(driver, 5).until(
+        eles = WebDriverWait(driver, 15).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
         )
         for e in eles:
