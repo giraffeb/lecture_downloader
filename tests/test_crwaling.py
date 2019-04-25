@@ -17,6 +17,12 @@ def default_config():
 
 class CrawlingTest(unittest.TestCase):
 
+    def test_webdriver(self):
+        crawl = CrawlingUrl(web_driver_path=default_drvier_path)
+        driver = crawl.get_web_driver()
+        driver.get('http://www.naver.com')
+
+
     def test_load_base_page(self):
 
         default_config()
