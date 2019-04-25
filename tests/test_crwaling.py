@@ -30,9 +30,9 @@ class CrawlingTest(unittest.TestCase):
         downloder = WebDriverDownloader()
         downloder.download_web_driver()
 
-        default_drvier_path = './geckodriver'
+        default_driver_path = './geckodriver'
 
-        crawl = CrawlingUrl(web_driver_path=default_drvier_path)
+        crawl = CrawlingUrl(web_driver_path=default_driver_path)
         driver = crawl.get_web_driver()
         driver.get('http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937')
 
@@ -44,9 +44,11 @@ class CrawlingTest(unittest.TestCase):
 
     def test_load_base_page(self):
 
-        # default_config()
-        # logger = logging.getLogger(__name__)
-        # logger.debug("Hello new world")
+        default_config()
+        logger = logging.getLogger(__name__)
+        logger.debug("Hello new world")
+
+        default_driver_path = './geckodriver'
 
         target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
 
