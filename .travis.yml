@@ -1,10 +1,13 @@
 language: python
 
+sudo: required
+
 matrix:
   include:
   - os: osx
     language: generic
     env: PYTHON=3.5.1
+
 
 before_install: |
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -44,6 +47,9 @@ addons:
 
 
 after_success:
+  - python -m codecov
+
+after_failure:
   - python -m codecov
 
 
