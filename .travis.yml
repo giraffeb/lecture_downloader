@@ -9,7 +9,11 @@ matrix:
     env: PYTHON=3.5.1
 
 
-before_install: |
+before_install:
+
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then
     brew update
     # Per the `pyenv homebrew recommendations <https://github.com/yyuu/pyenv/wiki#suggested-build-environment>`_.

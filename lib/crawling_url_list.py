@@ -87,9 +87,10 @@ class CrawlingUrl:
 
             driver.get(lecture_link)
 
-            element = WebDriverWait(driver, 15).until(
+            element = WebDriverWait(driver, 60).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
             )
+            print('##element ->', element)
 
             lecture_page_html = driver.page_source
             parsed_lecture_page = BeautifulSoup(lecture_page_html, 'lxml') #plain text -> lxml
