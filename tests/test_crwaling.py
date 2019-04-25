@@ -27,7 +27,7 @@ class CrawlingTest(unittest.TestCase):
         driver = crawl.get_web_driver()
         driver.get('http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937')
 
-        element = WebDriverWait(driver, 10).until(
+        element = WebDriverWait(driver, 60).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
         )
 
