@@ -98,11 +98,11 @@ class CrawlingUrl:
             # urlencode_rtmp_src = parsed_lecture_page.find('param', {'name': 'flashvars'})["value"] #동영상 주소 값
             urlencode_rtmp_src=''
             try:
-                eles = WebDriverWait(driver, 10).until(
+                eles = WebDriverWait(driver, 30).until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
                 )
                 for e in eles:
-                    print('#', e.get_attribute('value'))
+                    # print('#', e.get_attribute('value'))
                     urlencode_rtmp_src = e.get_attribute('value')
                     break
 
@@ -119,18 +119,19 @@ class CrawlingUrl:
         return download_list
 
 
-    def start_crawling(self, url):
-
-        if url == '' or url == None:
-            print("default url -> ", self.default_lecture_url)
-            url=self.default_lecture_url
-
-        driver = self.get_web_driver()
-        lecture_a_tag_list = self.get_parsed_html_page(driver=driver,url=url, query='#class_room div a')
-
-        lecuture_list = self.get_video_link(driver, lecture_a_tag_list)
-        self.write_url_list_to_file(file_path=self.file_path, download_list=lecuture_list)
-        logging.debug('file writing complete')
+    # 제외
+    # def start_crawling(self, url):
+    #
+    #     if url == '' or url == None:
+    #         print("default url -> ", self.default_lecture_url)
+    #         url=self.default_lecture_url
+    #
+    #     driver = self.get_web_driver()
+    #     lecture_a_tag_list = self.get_parsed_html_page(driver=driver,url=url, query='#class_room div a')
+    #
+    #     lecuture_list = self.get_video_link(driver, lecture_a_tag_list)
+    #     self.write_url_list_to_file(file_path=self.file_path, download_list=lecuture_list)
+    #     logging.debug('file writing complete')
 
 
 
