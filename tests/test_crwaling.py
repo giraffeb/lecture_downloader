@@ -31,7 +31,7 @@ class CrawlingTest(unittest.TestCase):
             EC.presence_of_element_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
         )
 
-        print('COMPLETE')
+        print('COMPLETE MORE')
         print(element.get)
 
 
