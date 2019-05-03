@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/giraffeb/lecture_downloader.svg?branch=master)](https://travis-ci.org/giraffeb/lecture_downloader)
 [![codecov](https://codecov.io/gh/giraffeb/lecture_downloader/branch/master/graph/badge.svg)](https://codecov.io/gh/giraffeb/lecture_downloader)
+[![Coverage Status](https://coveralls.io/repos/github/giraffeb/lecture_downloader/badge.svg?branch=master)](https://coveralls.io/github/giraffeb/lecture_downloader?branch=master)
+
+
 # lecture_downloader
 
 ### Pycharm project upload.<br>

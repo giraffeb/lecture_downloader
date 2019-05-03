@@ -16,3 +16,4 @@
 .geckdriver.log
 .start.spec
 
+.coveralls.yml
