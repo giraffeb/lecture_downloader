@@ -59,7 +59,7 @@ class CrawlingUrl:
         driver = webdriver.Firefox(executable_path=self.web_driver_path, firefox_profile=firefoxProfile,
                                    options=options)
 
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(60)
 
         return driver
 
@@ -88,7 +88,7 @@ class CrawlingUrl:
         driver = webdriver.Firefox(executable_path=self.web_driver_path, firefox_profile=firefoxProfile,
                                    options=options, proxy=myProxy)
 
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(120)
 
         return driver
 
