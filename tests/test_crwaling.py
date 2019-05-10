@@ -2,34 +2,34 @@
 
 import logging
 import logging.config
-
 import os
+
 import pytest
 
-
-
-from lib.myLogger import MyLoggerConfig
 from lib.crawling_url_list import CrawlingUrl
-
+from lib.myLogger import MyLoggerConfig
 
 working_dir = os.getcwd()
 default_driver_path = working_dir+'/geckodriver'
 default_driver_file_path = default_driver_path+'/geckodriver'
 default_config_path = working_dir+'/sample.yaml'
 
+
 @pytest.mark.first
 def test_down_web_driver():
     print('#first')
 
     from lib.webdriver_downloader import WebDriverDownloader
+    from time import sleep
 
     print('#default dir ->', default_driver_path)
 
     downloder = WebDriverDownloader()
     downloder.download_web_driver()
+    sleep(3)
 
 @pytest.mark.second
-def test_load_base_page():
+def test_load_base_page(pre_setup):
     print('#second')
 
     default_config()
@@ -39,19 +39,26 @@ def test_load_base_page():
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
 
     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver()
+    driver = crawl.get_web_driver_for_test() #Test Version
     driver.get(target)
+
+    page_html = driver.page_source
+    print(page_html[:100])
+
 
 
 @pytest.mark.third
-def test_get_lecture_link():
+def test_get_lecture_link(pre_setup):
     print('#third')
 
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver()
+    driver = crawl.get_web_driver_for_test() #Test Version
     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
 
+    for l in result:
+        lecture_link = l['href']
+        print(lecture_link)
     crawl.get_video_link(driver, result)
 
 
