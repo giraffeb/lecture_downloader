@@ -21,7 +21,7 @@ default_config_path = working_dir+'/sample.yaml'
 #     for l in result:
 #         lecture_link = l['href']
 #         print(lecture_link)
-#     # crawl.get_video_link(driver, result)
+#     crawl.get_video_link(driver, result)
 
 
 def test_proxy_two():
