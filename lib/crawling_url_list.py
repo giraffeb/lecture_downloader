@@ -122,14 +122,15 @@ class CrawlingUrl:
             start = timeit.default_timer()
 
             lecture_link = lecture_a_tag['href']
-            print("# : {0}".format(lecture_number) + " :: " + lecture_link)  # TODO: logging으로 변경하기.
+            print('videoLink')
+            # print("# : {0}".format(lecture_number) + " :: " + lecture_link)  # TODO: logging으로 변경하기.
 
             driver.get(lecture_link)
 
             # urlencode_rtmp_src = parsed_lecture_page.find('param', {'name': 'flashvars'})["value"] #동영상 주소 값
             urlencode_rtmp_src = ''
             try:
-                eles = WebDriverWait(driver, 30).until(
+                eles = WebDriverWait(driver, 120).until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
                 )
                 for e in eles:
