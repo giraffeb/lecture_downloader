@@ -29,7 +29,7 @@ def test_down_web_driver():
     sleep(3)
 
 @pytest.mark.second
-def test_load_base_page(pre_setup):
+def test_load_base_page():
     print('#second')
 
     default_config()
@@ -48,7 +48,7 @@ def test_load_base_page(pre_setup):
 
 
 @pytest.mark.third
-def test_get_lecture_link(pre_setup):
+def test_get_lecture_link():
     print('#third')
 
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
