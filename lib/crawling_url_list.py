@@ -115,7 +115,7 @@ class CrawlingUrl:
         download_list = []
         print('# video link parse time')
         for lecture_a_tag in video_a_tag_list:
-            if lecture_number > 5:  # debug mode TODO: 디버그 이후 삭제
+            if lecture_number > 0:  # debug mode TODO: 디버그 이후 삭제
                 break
 
             #timeit
