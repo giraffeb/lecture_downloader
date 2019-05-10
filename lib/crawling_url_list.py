@@ -102,6 +102,7 @@ class CrawlingUrl:
         return query_result
 
     def get_video_link(self, driver, video_a_tag_list):
+        import timeit
         '''
         https://beomi.github.io/2017/10/29/HowToMakeWebCrawler-ImplicitWait-vs-ExplicitWait/
         WEBDRIVER until 기
@@ -112,10 +113,13 @@ class CrawlingUrl:
         lecture_number = 0
 
         download_list = []
-
+        print('# video link parse time')
         for lecture_a_tag in video_a_tag_list:
             if lecture_number > 5:  # debug mode TODO: 디버그 이후 삭제
                 break
+
+            #timeit
+            start = timeit.default_timer()
 
             lecture_link = lecture_a_tag['href']
             print("# : {0}".format(lecture_number) + " :: " + lecture_link)  # TODO: logging으로 변경하기.
@@ -148,6 +152,10 @@ class CrawlingUrl:
             download_list.append({"lecture_number": str(lecture_number), "lecture_name": lecture_name,
                                   "rtmp_download_src": rtmp_src})  # 리스트에 저장하기. lecture_a_tag와 lecture_link관계 확인하기.
             lecture_number += 1
+
+            #timeit
+            stop = timeit.default_timer()
+            print('SECOND -> ', stop - start)
 
         return download_list
 

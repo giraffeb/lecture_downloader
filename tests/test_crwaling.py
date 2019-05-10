@@ -3,6 +3,7 @@
 import logging
 import logging.config
 import os
+import timeit
 
 import pytest
 
@@ -39,7 +40,7 @@ def test_load_base_page():
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
 
     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver_for_test() #Test Version
+    driver = crawl.get_web_driver() #Test Version
     driver.get(target)
 
     page_html = driver.page_source
@@ -49,16 +50,23 @@ def test_load_base_page():
 
 @pytest.mark.third
 def test_get_lecture_link():
+    import timeit
     print('#third')
 
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver_for_test() #Test Version
+    driver = crawl.get_web_driver() #Test Version
+    start = timeit.default_timer()
     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
+
 
     for l in result:
         lecture_link = l['href']
         print(lecture_link)
+
+    stop = timeit.default_timer()
+    print('#link list getting time -> ', stop - start)
+
     crawl.get_video_link(driver, result)
 
 

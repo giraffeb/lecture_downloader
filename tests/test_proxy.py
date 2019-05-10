@@ -25,7 +25,10 @@ default_config_path = working_dir+'/sample.yaml'
 
 
 def test_proxy_two():
+    print("TEST2")
     import requests
+    import timeit
+
 
     test_proxy = '206.189.234.211:80'
     # test_proxy = 'http://kproxyx.xyz/'
@@ -39,7 +42,33 @@ def test_proxy_two():
     s.proxies = proxies
 
     # Make the HTTP request through the session.
-    r = s.get('http://www.naver.com/')
+    # 시작부분 코드
+
+    start = timeit.default_timer()
+    url = 'http://snui.snu.ac.kr/main/css/NanumGothic.woff'
+    r = s.get(url)
+    stop = timeit.default_timer()
+    print('SECOND -> ',stop - start)
 
     # Check if the proxy was indeed used (the text should contain the proxy IP).
-    print(r.text)
+    # print(r.text)
+
+def test_proxy_three():
+    print("TEST3")
+    import requests
+    import timeit
+
+    # Create the session and set the proxies.
+    s = requests.Session()
+
+    # Make the HTTP request through the session.
+    # 시작부분 코드
+
+    start = timeit.default_timer()
+    url = 'http://snui.snu.ac.kr/main/css/NanumGothic.woff'
+    r = s.get(url)
+    stop = timeit.default_timer()
+    print('SECOND -> ', stop - start)
+
+    # Check if the proxy was indeed used (the text should contain the proxy IP).
+    # print(r.text)
