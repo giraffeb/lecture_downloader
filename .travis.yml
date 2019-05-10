@@ -11,7 +11,7 @@ install:
   - python -m pip install -r requirements.txt
 
 script:
-  - python -m pytest -s --cov=./ ./tests/test_crwaling.py
+  - python -m pytest -s --cov=./ ./tests/
 
 env:
   - MOZ_HEADLESS=1

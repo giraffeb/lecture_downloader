@@ -47,7 +47,7 @@ def test_load_base_page():
     print(page_html[:100])
 
 
-
+#시간제한
 # @pytest.mark.third
 # def test_get_lecture_link():
 #     import timeit
@@ -70,52 +70,29 @@ def test_load_base_page():
 #
 #     crawl.get_video_link(driver, result)
 
-@pytest.mark.forth
-def test_get_lecture_link_one():
-    import timeit
-    print('#third')
-
-    target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-    crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-    driver = crawl.get_web_driver()  # Test Version
-    start = timeit.default_timer()
-    result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
-
-    for l in result:
-        lecture_link = l['href']
-        print(lecture_link)
-        break
-
-    stop = timeit.default_timer()
-    print('#link list getting time -> ', stop - start)
-
-    crawl.get_video_link(driver, result)
-
-
-
-# def test_until():
-#     from selenium.webdriver.support.wait import WebDriverWait
-#     from selenium.webdriver.support import expected_conditions as EC
-#     from selenium.webdriver.common.by import By
+#시간제한
+# @pytest.mark.forth
+# def test_get_lecture_link_one():
+#     import timeit
+#     print('#third')
 #
 #     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-#     crawl = CrawlingUrl(web_driver_path=default_driver_file_path, debug=True)
-#     driver = crawl.get_web_driver()
-#     driver.get(target)
+#     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
+#     driver = crawl.get_web_driver()  # Test Version
+#     start = timeit.default_timer()
+#     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
 #
-#     try:
-#         eles = WebDriverWait(driver, 15).until(
-#             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'param[name=flashvars]'))
-#         )
-#         for e in eles:
-#             print('#', e.get_attribute('value'))
+#     for l in result:
+#         lecture_link = l['href']
+#         print(lecture_link)
+#         break
 #
-#     except EnvironmentError:
-#         print('#####err')
+#     stop = timeit.default_timer()
+#     print('#link list getting time -> ', stop - start)
 #
-#
-#     finally:
-#         driver.quit()
+#     crawl.get_video_link(driver, result)
+
+
 
 
 def default_config():
