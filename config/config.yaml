@@ -1,0 +1,23 @@
+#lecturedownloader:
+
+file_writer:
+  file_path: "list.txt"
+web_driver:
+  type: "firefox"
+
+job_manager:
+  thread_pool_size: 4
+  save_dir: "video"
+
+worker:
+  #mocOS에서 brew를 통해 rtmpdump가 설치된 상황을 가정합니다.
+  rtmp_path: "rtmpdump"
+
+crawler:
+  lecture_page_list_query: "#class_room div a"
+  lecture_video_query: "param[name=flashvars]"
+
+
+
+
+

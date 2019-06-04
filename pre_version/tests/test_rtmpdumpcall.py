@@ -2,9 +2,8 @@
 
 import logging
 import os
-import pytest
 
-from lib.rtmpdumpcall import RtmpDumpPrepare
+from pre_version.lib.rtmpdumpcall import RtmpDumpPrepare
 
 logging.basicConfig(level=logging.DEBUG)
 cwd = os.getcwd()

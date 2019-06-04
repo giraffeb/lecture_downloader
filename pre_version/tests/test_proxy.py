@@ -1,11 +1,9 @@
 import os
 
-from lib.crawling_url_list import CrawlingUrl
-
 working_dir = os.getcwd()
 default_driver_path = working_dir+'/geckodriver'
 default_driver_file_path = default_driver_path+'/geckodriver'
-default_config_path = working_dir+'/sample.yaml'
+default_config_path = working_dir+'/logger.yaml'
 
 
 # def test_one():
@@ -13,15 +11,15 @@ default_config_path = working_dir+'/sample.yaml'
 #     print('#third')
 #
 #     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-#     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-#     driver = crawl.get_web_driver_for_test()
+#     crawler = CrawlingUrl(web_driver_path=default_driver_file_path)
+#     driver = crawler.get_web_driver_for_test()
 #
-#     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
+#     result = crawler.get_parsed_html_page(driver, target, '#class_room div a')
 #
 #     for l in result:
 #         lecture_link = l['href']
 #         print(lecture_link)
-#     crawl.get_video_link(driver, result)
+#     crawler.get_video_link(driver, result)
 
 
 def test_proxy_two():

@@ -1,102 +1,43 @@
-# -*- coding:utf-8 -*-
-import logging
-import logging.config
-import multiprocessing as mp
+from lib.lecture_downloader.lecture_downloader import LectureDownloader
+from lib.lecture_downloader.web_driver.web_driver_factory import WebDriverFactory
+from lib.lecture_downloader.file_writer.file_writer import FileWriter
+from lib.lecture_downloader.crawler.lecture_crawler import LectureCrawler
+from lib.lecture_downloader.downloader.video_downloader import VideoDownloader
+from lib.lecture_downloader.worker.worker_manager import JobManager
 
-import os
-import tarfile
-import wget
+import yaml
 
-from lib.crawling_url_list import CrawlingUrl
-from lib.myLogger import MyLoggerConfig
-from lib.rtmpdumpcall import RtmpDumpPrepare
+def load_config(path):
+    config_file = open(path, "r")
+    config_object = yaml.load(config_file, Loader=yaml.FullLoader)
 
-'''
-서로 호출하는 것만 만들어 놓아야겠다.
-'''
-
-
-
-'''
-메인에는 단순하게 로직만 넣기.
-
-'''
-working_dir = os.getcwd()
-
-default_file_path = working_dir+"/list.txt"
-default_process_number = 4
-default_dir_path = '.'
-default_web_driver_path = './geckodriver'
-
-default_driver_path = working_dir+'/geckodriver'
-default_driver_file_path = default_driver_path+'/geckodriver'
-
-#rtmpdump_path = "./rtmpdump-2-2.3/rtmpdump "
-rtmpdump_path = "rtmpdump"
-default_number_of_process = 4
-max_number_of_process = 4
-
-
-def crawling_procedure(debug_flag):
-    logging.info('##crawling Start')
-    logging.info('## 강의 모든 링크를 수집하기위해 강의 url을 입력해주세요.')
-    target_lecture_link = input("snui url : ")  # 해당 과목의 강의에 속하는 주소
-
-
-    crawl = CrawlingUrl(web_driver_path=default_driver_file_path, file_path=default_file_path, debug=debug_flag)#객체 생성
-    crawl.start_crawling(url=target_lecture_link) #list.txt생성
-
-
-def video_download_procedure():
-    logging.info("##video download Start")
-
-    object_dir = input("저장할 디렉토리 : (기본값 = 현재 디렉토리)")
-    number_of_process = input("다중다운로드 수(기본값 : {}, 최대 :{}) :".format(default_number_of_process, max_number_of_process))
-
-    if number_of_process == '':
-        number_of_process = default_process_number
-    elif int(number_of_process) > max_number_of_process:
-        number_of_process = max_number_of_process
-
-    if object_dir == '':
-        object_dir = default_dir_path
-
-
-    logging.info('dir : %s' % object_dir)
-    logging.info('number of process : %d' % default_number_of_process)
-
-    rtmp_prepare = RtmpDumpPrepare()
-    down_list = rtmp_prepare.load_lecture_url_from_file(default_file_path)
-
-    rtmpdump_cmd_queue = rtmp_prepare.generate_process_queue(rtmpdump_path, object_dir, down_list)
-
-    processList = []
-
-    for i in range(number_of_process):
-        cur_process = mp.Process(target=rtmp_prepare.download_start, args=(rtmpdump_cmd_queue,))
-        # p = DownloadProcess(urlQueue, i)
-        cur_process.start()
-        processList.append(cur_process)
-
-    for p in processList:
-        p.join()
-
+    return config_object
 
 def main():
-    from lib.webdriver_downloader import  WebDriverDownloader
 
-    down = WebDriverDownloader()
-    down.download_web_driver()
+    config = load_config('config/config.yaml')
 
-    my_logger = MyLoggerConfig()
-    my_logger.yaml_config_loader()
-    logging.config.dictConfig(my_logger.get_myLogger_config())
+    thread_pool_size = config['job_manager']['thread_pool_size']
+    save_dir = config['job_manager']['save_dir']
 
-    #1 크롤링하기
-    # crawling_procedure(debug_flag=True)
-    crawling_procedure(debug_flag=False)
-    #2 다운로드하기
-    video_download_procedure()
+    lecture_page_list_query = config['crawler']['lecture_page_list_query']
+    lecture_video_query = config['crawler']['lecture_video_query']
+
+    web_driver = WebDriverFactory.create_web_driver(web_driver_type='firefox')
+    file_writer = FileWriter(lecture_link_file='list.txt')
+
+    job_manager = JobManager(size=thread_pool_size, save_dir=save_dir)
+
+    lecture_crawler = LectureCrawler(target_webdriver=web_driver
+                                     , target_file_writer=file_writer
+                                     , lecture_page_list_query=lecture_page_list_query
+                                     , lecture_video_query=lecture_video_query)
+
+    rtmp_downloader = VideoDownloader(file_writer=file_writer, job_manager=job_manager)
+
+    lecture_downloader = LectureDownloader(crawler=lecture_crawler, downloader=rtmp_downloader)
+
+    lecture_downloader.start()
 
 if __name__ == "__main__":
     main()

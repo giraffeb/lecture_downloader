@@ -3,24 +3,22 @@
 import logging
 import logging.config
 import os
-import timeit
 
 import pytest
 
-from lib.crawling_url_list import CrawlingUrl
-from lib.myLogger import MyLoggerConfig
+from pre_version.lib.crawling_url_list import CrawlingLecture
 
 working_dir = os.getcwd()
 default_driver_path = working_dir+'/geckodriver'
 default_driver_file_path = default_driver_path+'/geckodriver'
-default_config_path = working_dir+'/sample.yaml'
+# default_config_path = working_dir+'/logger.yaml'
 
 
 @pytest.mark.first
 def test_down_web_driver():
     print('#first')
 
-    from lib.webdriver_downloader import WebDriverDownloader
+    from pre_version.lib.webdriver_downloader import WebDriverDownloader
     from time import sleep
 
     print('#default dir ->', default_driver_path)
@@ -33,13 +31,13 @@ def test_down_web_driver():
 def test_load_base_page():
     print('#second')
 
-    default_config()
+    # default_config()
     logger = logging.getLogger(__name__)
     logger.debug("Hello new world")
 
     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
 
-    crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
+    crawl = CrawlingLecture(web_driver_path=default_driver_file_path)
     driver = crawl.get_web_driver() #Test Version
     driver.get(target)
 
@@ -54,10 +52,10 @@ def test_load_base_page():
 #     print('#third')
 #
 #     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-#     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-#     driver = crawl.get_web_driver() #Test Version
+#     crawler = CrawlingUrl(web_driver_path=default_driver_file_path)
+#     driver = crawler.get_web_driver() #Test Version
 #     start = timeit.default_timer()
-#     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
+#     result = crawler.get_parsed_html_page(driver, target, '#class_room div a')
 #
 #
 #     for l in result:
@@ -68,7 +66,7 @@ def test_load_base_page():
 #     stop = timeit.default_timer()
 #     print('#link list getting time -> ', stop - start)
 #
-#     crawl.get_video_link(driver, result)
+#     crawler.get_video_link(driver, result)
 
 #시간제한
 # @pytest.mark.forth
@@ -77,10 +75,10 @@ def test_load_base_page():
 #     print('#third')
 #
 #     target = 'http://snui.snu.ac.kr/ocw/index.php?mode=view&id=2937'
-#     crawl = CrawlingUrl(web_driver_path=default_driver_file_path)
-#     driver = crawl.get_web_driver()  # Test Version
+#     crawler = CrawlingUrl(web_driver_path=default_driver_file_path)
+#     driver = crawler.get_web_driver()  # Test Version
 #     start = timeit.default_timer()
-#     result = crawl.get_parsed_html_page(driver, target, '#class_room div a')
+#     result = crawler.get_parsed_html_page(driver, target, '#class_room div a')
 #
 #     for l in result:
 #         lecture_link = l['href']
@@ -90,12 +88,12 @@ def test_load_base_page():
 #     stop = timeit.default_timer()
 #     print('#link list getting time -> ', stop - start)
 #
-#     crawl.get_video_link(driver, result)
+#     crawler.get_video_link(driver, result)
 
 
 
 
-def default_config():
-    myLogger = MyLoggerConfig()
-    myLogger.yaml_config_loader(default_config_path)
-    logging.config.dictConfig(myLogger.get_myLogger_config())
+# def default_config():
+#     myLogger = MyLoggerConfig()
+#     myLogger.yaml_config_loader(default_config_path)
+#     logging.config.dictConfig(myLogger.get_myLogger_config())

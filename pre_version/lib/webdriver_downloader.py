@@ -14,10 +14,15 @@ class WebDriverDownloader:
         return sys_name
 
     def download_web_driver(self):
+        import os.path
 
         working_dir = os.getcwd()
         default_driver_path = working_dir + '/geckodriver'
+        check_driver_path = default_driver_path+'/geckodriver'
 
+        if os.path.isfile(check_driver_path) is True:
+            print('Gecko driver is already downloaded')
+            return
 
         gecko_path = working_dir+'/geckodriver.tar.gz'
         down_path = ''

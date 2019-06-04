@@ -8,7 +8,7 @@ class MyLoggerConfig:
         self.my_logger_config = {}
 
 
-    def yaml_config_loader(self, fila_path='./sample.yaml'):
+    def yaml_config_loader(self, fila_path='./logger.yaml'):
         with open(fila_path, 'r') as f:
             self.my_logger_config = yaml.safe_load(f.read())
 
