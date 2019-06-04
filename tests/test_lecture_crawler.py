@@ -25,7 +25,7 @@ crawler = LectureCrawler(target_webdriver=web_driver
                              , lecture_video_query=lecture_video_query)
 
 example_list = None
-example_list_path = 'test/example_list.txt'
+example_list_path = 'tests/example_list.txt'
 with open(example_list_path, 'r') as f:
     example_list = json.load(f)
 
