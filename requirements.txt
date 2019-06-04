@@ -12,7 +12,6 @@ coveralls==1.7.0
 docopt==0.6.2
 future==0.17.1
 idna==2.8
-lectuure-downloader==0.1
 lxml==4.3.3
 macholib==1.11
 more-itertools==7.0.0
