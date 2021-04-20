@@ -18,7 +18,7 @@ more-itertools==7.0.0
 pathlib2==2.3.3
 pefile==2019.4.18
 pluggy==0.9.0
-py==1.8.0
+py==1.10.0
 pycparser==2.19
 PyInstaller==3.4
 pytest==4.4.1
